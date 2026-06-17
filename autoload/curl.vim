@@ -180,6 +180,7 @@ def Terminal(cmd: string, mods: string)
         cwd: cwd,
     })
     b:terminal_cmd = cmd
+    b:terminal_name = term_name
 enddef
 
 def BotRight(): string
