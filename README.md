@@ -7,7 +7,17 @@ Example rest api calls:
 ```
 --url https://openlibrary.org/api/books?bibkeys=ISBN:0201558025,LCCN:93005405&format=json
 
+# or the same as above using --url-query
+--url https://openlibrary.org/api/books
+--url-query bibkeys=ISBN:0201558025,LCCN:93005405
+--url-query format=json
+
 --url https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400
+
+# or the same as above using --url-query
+--url https://api.sunrise-sunset.org/json
+--url-query lat=36.7201600
+--url-query lng=-4.4203400
 
 # --jq is not curl parameter. If added, curl output would be piped through jq
 --url https://httpbin.org/post
