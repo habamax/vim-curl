@@ -154,7 +154,7 @@ enddef
 
 def Terminal(cmd: string, mods: string)
     var cwd = getcwd()
-    var term_name = $'!{cmd}'
+    var term_name = '__curl__'
     var termbuf = term_list()->filter((_, v) => term_getstatus(v) != 'running')
     var bufnr = !empty(termbuf) ? termbuf[0] : -1
     defer () => {
@@ -179,6 +179,7 @@ def Terminal(cmd: string, mods: string)
         curwin: true,
         cwd: cwd,
     })
+    b:terminal_cmd = cmd
 enddef
 
 def BotRight(): string
