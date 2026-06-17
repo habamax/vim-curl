@@ -56,8 +56,8 @@ Collibra queries example:
 
 ## cURL
 
-There is a single command `:Curl` that creates and runs `curl` query out of
-text under the cursor.
+There is a single command `:Curl` that creates and runs `curl` cli-command out
+of text under the cursor.
 
 If `:Curl!` is used, the `curl` cli-command is copied to `+` register (clipboard).
 
