@@ -1,0 +1,83 @@
+*curl.txt*   cURL command line wrapper for Vim
+
+
+Requires curl executable in the PATH.
+
+
+                                                        *:Curl*
+
+:[range]Curl[!]         Run curl cli-command with parameters combined from the
+                        lines in [range]. If [range] is omitted, use non-blank
+                        lines around the cursor.
+                        When the [!] is included the actual curl command is
+                        additionally copied to the + register (clipboard).
+
+All the lines for the :Curl command are passing directly to the curl cli-command
+wrapping it with double quotes where necessary.
+
+Additionally, the --jq is not a part of curl parameter list but an extension of
+the plugin to be able to format json output. Requires jq executable.
+
+
+Example rest api calls:
+
+>
+    --url https://openlibrary.org/api/books?bibkeys=ISBN:0201558025,LCCN:93005405&format=json
+
+    # or the same as above using --url-query
+    --url https://openlibrary.org/api/books
+    --url-query bibkeys=ISBN:0201558025,LCCN:93005405
+    --url-query format=json
+
+    --url https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400
+
+    # or the same as above using --url-query
+    --url https://api.sunrise-sunset.org/json
+    --url-query lat=36.7201600
+    --url-query lng=-4.4203400
+
+    # --jq is not curl parameter. If added, curl output would be piped through jq
+    --url https://httpbin.org/post
+    --header "Content-Type: application/json"
+    --jq
+    --data
+    {
+    "string": "hello world",
+    "number": 69,
+    "date": "2024-04-09"
+    }
+<
+
+Common parameters for the rest of `--url`:
+
+>
+    --$url https://dog.ceo/api
+    --$header "Content-Type: application/json"
+    --$jq
+
+    --url /breeds/list/all
+
+    --url /breed/hound/images
+<
+
+Collibra queries example:
+>
+    --$url https://somecustomer-test.collibra.com/rest/2.0
+    --$user username:password@12345
+    # it is possible to use env variables instead
+    # --$user $USERNAME:$PASSWORD
+    --$jq
+
+    # Get community
+    --url /communities
+    --url-query name=6. Governance
+    --url-query nameMatchMode=EXACT
+
+    # Get domain
+    --url /domains
+    --url-query name=Data Policy Register
+    --url-query nameMatchMode=EXACT
+<
+
+==============================================================================
+vim:tw=78:ts=8:fo=tcq2:ft=help:

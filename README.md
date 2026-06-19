@@ -51,14 +51,11 @@ Collibra queries example:
 --$jq
 
 # Get community
-# 6. Governance
 --url /communities
 --url-query name=6. Governance
 --url-query nameMatchMode=EXACT
 
-# Get both domain and community
-# Domain: Data Policy Register Domain
-# Community: 6. Governance
+# Get domain
 --url /domains
 --url-query name=Data Policy Register
 --url-query nameMatchMode=EXACT
