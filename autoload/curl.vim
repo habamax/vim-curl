@@ -100,7 +100,7 @@ export def Execute(line1: number, line2: number, clipboard: bool = false)
         if !empty(jq_input)
             var jq_params = split(jq_input, '^\s*-\S\+\s*\zs')
             jq_opt = jq_params[0 : -2]->join()
-            jq_input = '"' .. jq_params[-1] .. '"'
+            jq_input = '"' .. escape(jq_params[-1], '"\' ) .. '"'
         endif
         # remove all --jqs
         input->filter((_, v) => v !~ '^--jq')
