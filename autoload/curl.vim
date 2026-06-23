@@ -186,7 +186,7 @@ def Terminal(cmd: string, mods: string)
     elseif bufnr == -1
         var counter = 1
         while !empty(term_list()->filter((_, v) => bufname(v) == term_name))
-            term_name = term_name->substitute('\( (\d\+)\)\?$', $' ({counter})', '')
+            term_name = term_name->substitute('\(\d\+\)\?$', $'{counter}', '')
             counter += 1
         endwhile
         exe $"{mods} split"
