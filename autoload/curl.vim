@@ -89,14 +89,18 @@ export def Execute(line1: number, line2: number, clipboard: bool = false)
 
     input = MergeCommonParams(input, CommonParams())
 
+    # there is a better way for sure, but let's just make it work first
     # extract last --jq
     var jq_list = input->deepcopy()->filter((_, v) => v =~ '^--jq')
     var use_jq = !empty(jq_list)
     var jq_input = ""
+    var jq_opt = ""
     if use_jq
         jq_input = trim(jq_list[-1][5 : ])
         if !empty(jq_input)
-            jq_input = '"' .. jq_input .. '"'
+            var jq_params = split(jq_input, '^\s*-\S\+\s*\zs')
+            jq_opt = jq_params[0 : -2]->join()
+            jq_input = '"' .. jq_params[-1] .. '"'
         endif
         # remove all --jqs
         input->filter((_, v) => v !~ '^--jq')
@@ -106,7 +110,7 @@ export def Execute(line1: number, line2: number, clipboard: bool = false)
 
     var cmd = $"curl --silent {input->join()}"
     if use_jq && executable("jq")
-        cmd ..= $' | jq {jq_input}'
+        cmd ..= $' | jq {jq_opt} {jq_input}'
     endif
     if clipboard
         setreg("+", cmd)
