@@ -133,9 +133,16 @@ def Escape(input: list<string>): list<string>
         endif
         if val =~ '^--url\s\+.*$'
             # if --url is not "quoted", do quote it
-            var url = input[idx]->split('--url\s*')[0]
+            var url = input[idx]->split('--url\s\+')[0]
             if url !~ '^\s*".*"\s*$'
                 input[idx] = $'--url "{url}"'
+            endif
+        endif
+        if val =~ '^--header\s\+.*$'
+            # if --header is not "quoted", do quote it
+            var header = input[idx]->split('--header\s\+')[0]
+            if header !~ '^\s*".*"\s*$'
+                input[idx] = $'--header "{header}"'
             endif
         endif
         if val =~ '^--data\s*.*$'
