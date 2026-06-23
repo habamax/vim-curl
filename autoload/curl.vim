@@ -163,7 +163,8 @@ def Escape(input: list<string>): list<string>
     var params = input[0 : data_idx - 1]
     var data = input[data_idx : -1]
 
-    data = mapnew(data, (_, v) => escape(v, '\"''$'))
+    var escape_chars = '\"''' .. (has("win32") ? '' : '$')
+    data = mapnew(data, (_, v) => escape(v, escape_chars))
     data[0] = '--data "' .. substitute(data[0], '--data\s*', '', '')
     data[-1] = data[-1] .. '"'
 
