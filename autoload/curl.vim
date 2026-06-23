@@ -76,9 +76,11 @@ export def Execute(line1: number, line2: number, clipboard: bool = false)
         firstline = search('^\(\s*$\)\|\%^', 'cbnW')
         lastline = search('^\(\s*$\)\|\%$', 'cnW')
     endif
-    # remove comments and empty lines, trim non-empty.
+    # Remove comments, empty lines, and common params.
+    # Trim non-empty.
     var input = getline(firstline, lastline)
         ->filter((_, v) => v !~ '^#.*$' && v !~ '^\s*$')
+        ->filter((_, v) => v !~ '^--\$')
         ->mapnew((_, v) => trim(v))
     if empty(input)
         echom 'Nothing to cURL'
