@@ -89,18 +89,24 @@ export def Execute(line1: number, line2: number, clipboard: bool = false)
 
     input = MergeCommonParams(input, CommonParams())
 
-    # extract --jq
-    var jq_idx = input->index('--jq')
-    var use_jq = jq_idx > -1
+    # extract last --jq
+    var jq_list = input->deepcopy()->filter((_, v) => v =~ '^--jq')
+    var use_jq = !empty(jq_list)
+    var jq_input = ""
     if use_jq
-        remove(input, jq_idx)
+        jq_input = trim(jq_list[-1][5 : ])
+        if !empty(jq_input)
+            jq_input = '"' .. jq_input .. '"'
+        endif
+        # remove all --jqs
+        input->filter((_, v) => v !~ '^--jq')
     endif
 
     input = Escape(input)
 
     var cmd = $"curl --silent {input->join()}"
     if use_jq && executable("jq")
-        cmd ..= ' | jq'
+        cmd ..= $' | jq {jq_input}'
     endif
     if clipboard
         setreg("+", cmd)
