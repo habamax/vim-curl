@@ -200,6 +200,7 @@ def Terminal(cmd: string, mods: string)
         cwd: cwd,
     })
     b:terminal_cmd = cmd
+    silent! wincmd p
 enddef
 
 def BotRight(): string
